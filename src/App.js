@@ -2,15 +2,21 @@ import "./App.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import TableCoins from "./components/TableCoins";
-
+import config from './config';
+const sma = require('trading-indicator').sma;
 function App() {
   const [coins, setCoins] = useState([]);
   const [search, setSearch] = useState("");
 
+
   const getData = async () => {
     try {
+
+      let smaData = await sma(8, "close", "binance", "BTC/USDT", "15m", true)
+      console.log(smaData);
+      
       const res = await axios.get(
-        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false"
+        config.coinCheckUrl
       );
       setCoins(res.data);
       console.log(res.data);

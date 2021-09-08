@@ -1,14 +1,16 @@
-import React from "react";
-import CoinRow from "./CoinRow";
-
-const titles = ["#", "Coin", "Price", "Price Change","24h Volume"];
+import React from 'react';
+import CoinRow from './CoinRow';
+import config from '../config';
+const titles = ['#', 'Coin', 'Price', 'Price Change', '24h Volume'];
 
 const TableCoins = ({ coins, search }) => {
-  const filteredCoins = coins.filter((coin) =>
-    coin.name.toLowerCase().includes(search.toLowerCase())
+  const filteredCoins = coins.filter(
+    coin =>
+      coin.symbol.toLowerCase().includes(search.toLowerCase()) &&
+      config.binanceList.some(c => c.includes(coin.symbol.toUpperCase()))
   );
 
-  if (!coins) return <div>no coins</div>
+  if (!coins) return <div>no coins</div>;
 
   return (
     <table className="table table-dark mt-4 table-hover">
